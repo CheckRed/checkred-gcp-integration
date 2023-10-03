@@ -12,7 +12,7 @@ sh deploy.sh <GCP_PROJECT_ID> <CHECKRED_SERVICE_ACCOUNT_EMAIL>
 
 Please replace the <CHECKRED_SERVICE_ACCOUNT_EMAIL> with CheckRed impersonation service account email address
 
-NOTE: Please copy the output **service_account_email** and paste into the CheckRed GCP Impersonation account on CheckRed platform
+NOTE: Please copy the terraform output **service_account_email** from Cloud Shell console and paste into the CheckRed GCP Impersonation account on CheckRed platform
 
 ## Congratulations
 
