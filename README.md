@@ -3,7 +3,7 @@ CheckRed CSPM GCP Integration for GCP 1-Click deployment
 
 ## Project Setup
 
-Google Cloud Platform organizes resources into projects. Select your GCP project to integrate with CheckRed Platform
+Google Cloud Platform organizes resources into projects. Select your GCP project to integrate with CheckRed Platform. Create a new project to ensure that you have the permissions you need, or select an existing project in which you have the relevant permissions.
 
 ## Enable IAM API for generating short-lived credentials & impersonating service accounts. 
 ```bash
