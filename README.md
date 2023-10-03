@@ -27,4 +27,4 @@ Please replace the <GCP_PROJECT_ID> and <CHECKRED_SERVICE_ACCOUNT_EMAIL> with GC
 
 You’re all set!
 
-<walkthrough-footnote>COPYRIGHT © 2023-24 CheckRed LLC</walkthrough-footnote>
+<walkthrough-footnote>© 2023-24 CheckRed All rights reserved</walkthrough-footnote>
