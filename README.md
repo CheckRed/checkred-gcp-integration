@@ -7,7 +7,7 @@ Google Cloud Platform organizes resources into projects. Select your GCP project
 
 ## Enable IAM API for generating short-lived credentials & impersonating service accounts. 
 ```bash
-sh deploy.sh <walkthrough-project-id/> <CHECKRED_SERVICE_ACCOUNT_EMAIL>
+sh deploy.sh <GCP_PROJECT_ID> <CHECKRED_SERVICE_ACCOUNT_EMAIL>
 ```
 
 Click on **Copy to Cloud Shell** <walkthrough-cloud-shell-icon></walkthrough-cloud-shell-icon> button and replace the <CHECKRED_SERVICE_ACCOUNT_EMAIL> with CheckRed email address 
