@@ -11,7 +11,7 @@ output "service_account_email" {
 
 resource "google_project_iam_binding" "viewer_binding" {
   project = "PROJECT_ID"
-  role    = "roles/container.viewer"
+  role    = "roles/viewer"
 
   # Reference the email of the service account from the output
   members = [
