@@ -8,7 +8,7 @@ resource "google_service_account" "checkred_org_integration" {
 }
 
 data "google_projects" "all_projects" {
-  filter = "parent.id:${ORGANIZATION_ID}"
+  filter = "parent.id:ORGANIZATION_ID"
 }
 
 
@@ -24,7 +24,7 @@ resource "google_project_iam_binding" "checkred_viewer" {
 
 resource "google_organization_iam_custom_role" "checkred_read_access_role" {
   role_id     = "CheckRedReadAccessRole"
-  org_id      = "${ORGANIZATION_ID}"
+  org_id      = "ORGANIZATION_ID"
   title       = "checkred-service-account-read-role"
   description = "CheckRed integration custom role for read access to organization, folders & projects"
   permissions = [
@@ -37,7 +37,7 @@ resource "google_organization_iam_custom_role" "checkred_read_access_role" {
 }
 
 resource "google_organization_iam_binding" "list_projects_binding" {
-  org_id = "${ORGANIZATION_ID}"
+  org_id = "ORGANIZATION_ID"
   role   = google_organization_iam_custom_role.checkred_read_access_role.id
   members = [
     "serviceAccount:${google_service_account.checkred_org_integration.email}",
@@ -52,4 +52,8 @@ resource "google_project_iam_binding" "token_creator_binding" {
   members = [
     "serviceAccount:CHECKRED_ORG_SERVICE_ACCOUNT_EMAIL",
   ]
+}
+
+output "service_account_email" {
+  value = google_service_account.checkred_org_integration.email
 }
