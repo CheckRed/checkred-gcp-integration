@@ -13,7 +13,7 @@ Select your GCP project to integrate with CheckRed Platform
 NOTE: org-onboading.sh will create the Service account in your project. Please copy the output **service_account_email** from Cloud Shell console and paste into the CheckRed GCP Impersonation account on CheckRed platform
 
 ```bash
-sh org-onboarding.sh <walkthrough-project-id/> <CHECKRED_SERVICE_ACCOUNT_EMAIL>
+cd org-onboarding && sh org-onboarding.sh <walkthrough-project-id/> <CHECKRED_SERVICE_ACCOUNT_EMAIL>
 ```
 
 Click on **Copy to Cloud Shell** <walkthrough-cloud-shell-icon></walkthrough-cloud-shell-icon> button and replace the <CHECKRED_SERVICE_ACCOUNT_EMAIL> with CheckRed email address 
