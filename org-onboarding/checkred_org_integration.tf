@@ -53,7 +53,3 @@ resource "google_project_iam_binding" "token_creator_binding" {
     "serviceAccount:CHECKRED_ORG_SERVICE_ACCOUNT_EMAIL",
   ]
 }
-
-output "service_account_email" {
-  value = google_service_account.checkred_org_integration.email
-}
