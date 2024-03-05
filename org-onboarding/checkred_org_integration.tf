@@ -2,7 +2,7 @@ data "google_project" "project" {
 }
 
 resource "google_service_account" "checkred_org_integration" {
-  account_id   = "checkred-org-integration"
+  account_id   = "checkred-test-org-integration"
   display_name = "CheckRed Organization Integration Service Account"
   project      = data.google_project.project.number
 }
@@ -23,9 +23,9 @@ resource "google_project_iam_binding" "checkred_viewer" {
 }
 
 resource "google_organization_iam_custom_role" "checkred_read_access_role" {
-  role_id     = "CheckRedReadAccessRole"
+  role_id     = "CheckRedReadAccessTestRole"
   org_id      = "ORGANIZATION_ID"
-  title       = "checkred-service-account-read-role"
+  title       = "checkred-service-account-read-test-role"
   description = "CheckRed integration custom role for read access to organization, folders & projects"
   permissions = [
     "resourcemanager.organizations.get",
