@@ -8,7 +8,7 @@ resource "google_service_account" "checkred_org_integration" {
 }
 
 data "google_projects" "all_projects" {
-  filter = "parent.id:ORGANIZATION_ID"
+  filter = "parent.id:*"
 }
 
 
