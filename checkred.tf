@@ -41,7 +41,7 @@ resource "google_project_iam_custom_role" "checkred_gke_policy" {
 
 resource "google_project_iam_binding" "checkred_gke_policy_binding" {
   project = "PROJECT_ID"
-  role    = "projects/${var.project_id}/roles/${google_project_iam_custom_role.checkred_gke_policy.role_id}"
+  role    = "projects/PROJECT_ID/roles/${google_project_iam_custom_role.checkred_gke_policy.role_id}"
 
   members = [
     "serviceAccount:CHECKRED_SERVICE_ACCOUNT_EMAIL",
