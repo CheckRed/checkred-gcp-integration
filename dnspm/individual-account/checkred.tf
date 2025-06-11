@@ -1,5 +1,5 @@
 resource "google_service_account" "checkred_integration" {
-  account_id   = "checkred-dnspm-individual-integration-account"
+  account_id   = "checkred-dnspm-indiv-account"
   display_name = "CheckRed Integration"
   project      = "PROJECT_ID"
 }
@@ -19,7 +19,7 @@ resource "google_project_iam_custom_role" "checkred_dnspm_role" {
 
 resource "google_project_iam_binding" "viewer_binding" {
   project = "PROJECT_ID"
-  role    = google_project_iam_custom_role.checkred.checkred_dnspm_role.role_id
+  role    = google_project_iam_custom_role.checkred_dnspm_role.role_id
 
   # Reference the email of the service account from the output
   members = [
