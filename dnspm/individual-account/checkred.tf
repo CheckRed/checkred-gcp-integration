@@ -9,17 +9,26 @@ output "service_account_email" {
   value = google_service_account.checkred_integration.email
 }
 
-resource "google_project_iam_custom_role" "checkred_dnspm_role" {
+resource "google_project_iam_custom_role" "checkred_dnspm_logs_viewer_role" {
   role_id     = "CheckRedDNSPMRole"
-  title       = "CheckRed DNSPM Role"
+  title       = "CheckRed DNSPM Logs Viewer Role"
   description = "Custom role with DNSPM specific permissions"
-  permissions = ["dns.changes.get","dns.changes.list","dns.dnsKeys.get","dns.dnsKeys.list","dns.managedZoneOperations.get","dns.managedZoneOperations.list","dns.managedZones.get","dns.managedZones.list","dns.policies.get","dns.policies.list","dns.projects.get","dns.resourceRecordSets.get","dns.resourceRecordSets.list","resourcemanager.projects.get","resourcemanager.projects.list","logging.logEntries.list","logging.privateLogEntries.list"]
+  permissions = ["logging.logEntries.list","logging.privateLogEntries.list"]
 }
 
-
-resource "google_project_iam_binding" "viewer_binding" {
+resource "google_project_iam_binding" "dns_reader_viewer_binding" {
   project = "PROJECT_ID"
-  role    = google_project_iam_custom_role.checkred_dnspm_role.role_id
+  role    = "roles/dns.reader"
+
+  # Reference the email of the service account from the output
+  members = [
+    "serviceAccount:${google_service_account.checkred_integration.email}",
+  ]
+}
+
+resource "google_project_iam_binding" "dns_logs_role_viewer_binding" {
+  project = "PROJECT_ID"
+  role    = google_project_iam_custom_role.checkred_dnspm_role.name
 
   # Reference the email of the service account from the output
   members = [
