@@ -51,7 +51,7 @@ resource "google_organization_iam_binding" "list_projects_binding" {
 }
 
 resource "google_project_iam_binding" "dns_logs_role_viewer_binding" {
-  project = "PROJECT_ID"
+  project = "ORGANIZATION_ID"
   role    = google_project_iam_custom_role.checkred_dnspm_logs_viewer_role.name
 
   # Reference the email of the service account from the output
