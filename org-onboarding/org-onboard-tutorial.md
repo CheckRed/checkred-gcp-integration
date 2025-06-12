@@ -19,7 +19,7 @@ cd org-onboarding && sh org-onboarding.sh <walkthrough-project-id/> <CHECKRED_SE
 Click on **Copy to Cloud Shell** <walkthrough-cloud-shell-icon></walkthrough-cloud-shell-icon> button and replace the <CHECKRED_SERVICE_ACCOUNT_EMAIL> with CheckRed email address 
 
 
-<walkthrough-footnote>© 2023-24 CheckRed All rights reserved</walkthrough-footnote>
+<walkthrough-footnote>© 2025-26 CheckRed All rights reserved</walkthrough-footnote>
 
 ## Congratulations
 
@@ -27,4 +27,4 @@ Click on **Copy to Cloud Shell** <walkthrough-cloud-shell-icon></walkthrough-clo
 
 You’re all set!
 
-<walkthrough-footnote>© 2023-24 CheckRed All rights reserved</walkthrough-footnote>
+<walkthrough-footnote>© 2025-26 CheckRed All rights reserved</walkthrough-footnote>
