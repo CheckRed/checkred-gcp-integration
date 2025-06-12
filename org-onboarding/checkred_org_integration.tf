@@ -11,6 +11,12 @@ data "google_projects" "all_projects" {
   filter = "parent.id:*"
 }
 
+resource "google_project_iam_custom_role" "checkred_dnspm_logs_viewer_role" {
+  role_id     = "CheckRedDNSPMOrgRole"
+  title       = "CheckRed DNSPM Org Logs Viewer Role"
+  description = "Custom role with DNSPM specific permissions"
+  permissions = ["logging.logEntries.list","logging.privateLogEntries.list"]
+}
 
 resource "google_project_iam_binding" "checkred_viewer" {
   count   = length(data.google_projects.all_projects.projects)
