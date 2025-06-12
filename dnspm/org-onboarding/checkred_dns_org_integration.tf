@@ -22,7 +22,7 @@ resource "google_project_iam_binding" "checkred_dns_viewer" {
 }
 
 resource "google_organization_iam_custom_role" "checkred_dns_read_access_role" {
-  role_id     = "CheckRedReadAccessRole"
+  role_id     = "CheckRedDNSOrgReadAccessRole"
   org_id      = "ORGANIZATION_ID"
   title       = "checkred-dns-service-account-read-role"
   description = "CheckRed DNS integration custom role for read access to organization, folders & projects"
