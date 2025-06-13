@@ -67,16 +67,6 @@ resource "google_organization_iam_binding" "list_projects_binding" {
   ]
 }
 
-resource "google_project_iam_binding" "dns_logs_role_viewer_binding" {
-  project = "ORGANIZATION_ID"
-  role    = google_project_iam_custom_role.checkred_dnspm_viewer_role.name
-
-  # Reference the email of the service account from the output
-  members = [
-    "serviceAccount:${google_service_account.checkred_dns_org_integration.email}",
-  ]
-}
-
 resource "google_project_iam_binding" "token_creator_binding" {
   count   = length(data.google_projects.all_projects.projects)
   project = data.google_projects.all_projects.projects[count.index].project_id
