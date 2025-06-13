@@ -11,10 +11,34 @@ data "google_projects" "all_projects" {
   filter = "parent.id:*"
 }
 
+resource "google_project_iam_custom_role" "checkred_dnspm_viewer_role" {
+  role_id     = "CheckRedDNSPMOrgRole"
+  title       = "CheckRed DNSPM Org Logs Viewer Role"
+  description = "Custom role with DNSPM specific permissions"
+  permissions = [
+    "dns.changes.get",
+    "dns.changes.list",
+    "dns.dnsKeys.get",
+    "dns.dnsKeys.list",
+    "dns.managedZoneOperations.get",
+    "dns.managedZoneOperations.list",
+    "dns.managedZones.get",
+    "dns.managedZones.list",
+    "dns.policies.get",
+    "dns.policies.list",
+    "dns.projects.get",
+    "dns.resourceRecordSets.get",
+    "dns.resourceRecordSets.list",
+    "resourcemanager.projects.get",
+    "logging.logEntries.list",
+    "logging.privateLogEntries.list"
+  ]
+}
+
 resource "google_project_iam_binding" "checkred_dns_viewer" {
   count   = length(data.google_projects.all_projects.projects)
   project = data.google_projects.all_projects.projects[count.index].project_id
-  role    = "roles/dns.reader"
+  role    = google_project_iam_custom_role.checkred_dnspm_viewer_role.name
 
   members = [
     "serviceAccount:${google_service_account.checkred_dns_org_integration.email}",
@@ -35,13 +59,6 @@ resource "google_organization_iam_custom_role" "checkred_dns_read_access_role" {
   ]
 }
 
-resource "google_project_iam_custom_role" "checkred_dnspm_logs_viewer_role" {
-  role_id     = "CheckRedDNSPMOrgRole"
-  title       = "CheckRed DNSPM Org Logs Viewer Role"
-  description = "Custom role with DNSPM specific permissions"
-  permissions = ["logging.logEntries.list","logging.privateLogEntries.list"]
-}
-
 resource "google_organization_iam_binding" "list_projects_binding" {
   org_id = "ORGANIZATION_ID"
   role   = google_organization_iam_custom_role.checkred_dns_read_access_role.id
@@ -52,7 +69,7 @@ resource "google_organization_iam_binding" "list_projects_binding" {
 
 resource "google_project_iam_binding" "dns_logs_role_viewer_binding" {
   project = "ORGANIZATION_ID"
-  role    = google_project_iam_custom_role.checkred_dnspm_logs_viewer_role.name
+  role    = google_project_iam_custom_role.checkred_dnspm_viewer_role.name
 
   # Reference the email of the service account from the output
   members = [
