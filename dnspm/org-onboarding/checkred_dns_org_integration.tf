@@ -11,7 +11,8 @@ data "google_projects" "all_projects" {
   filter = "parent.id:*"
 }
 
-resource "google_project_iam_custom_role" "checkred_dnspm_viewer_role" {
+resource "google_organization_iam_custom_role" "checkred_dnspm_viewer_role" {
+  org_id     = "ORGANIZATION_ID"
   role_id     = "CheckRedDNSPMOrgRole"
   title       = "CheckRed DNSPM Org Logs Viewer Role"
   description = "Custom role with DNSPM specific permissions"
@@ -38,7 +39,7 @@ resource "google_project_iam_custom_role" "checkred_dnspm_viewer_role" {
 resource "google_project_iam_binding" "checkred_dns_viewer" {
   count   = length(data.google_projects.all_projects.projects)
   project = data.google_projects.all_projects.projects[count.index].project_id
-  role    = google_project_iam_custom_role.checkred_dnspm_viewer_role.name
+  role    = google_organization_iam_custom_role.checkred_dnspm_viewer_role.name
 
   members = [
     "serviceAccount:${google_service_account.checkred_dns_org_integration.email}",
