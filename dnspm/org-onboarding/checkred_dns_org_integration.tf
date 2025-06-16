@@ -44,6 +44,9 @@ resource "google_project_iam_binding" "checkred_dns_viewer" {
   members = [
     "serviceAccount:${google_service_account.checkred_dns_org_integration.email}",
   ]
+ depends_on = [
+    google_organization_iam_custom_role.checkred_dnspm_viewer_role
+  ]
 }
 
 resource "google_organization_iam_custom_role" "checkred_dns_read_access_role" {
