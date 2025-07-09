@@ -8,6 +8,15 @@ Select your GCP project to integrate with CheckRed Platform
 
 <walkthrough-footnote>© 2023-24 CheckRed All rights reserved</walkthrough-footnote>
 
+## Choose Integration Type
+
+Select which integration(s) to enable:  
+<walkthrough-select
+  id="integration-type"
+  label="Select Integration Type"
+  options="CSPM,DNSPM"
+/>
+
 ## Enable IAM API for generating short-lived credentials & impersonating service accounts. 
 
 NOTE: deploy.sh will create the Service account in your project. Please copy the output **service_account_email** from Cloud Shell console and paste into the CheckRed GCP Impersonation account on CheckRed platform
