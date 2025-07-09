@@ -8,14 +8,15 @@ Select your GCP project to integrate with CheckRed Platform
 
 <walkthrough-footnote>© 2023-24 CheckRed All rights reserved</walkthrough-footnote>
 
-## Choose Integration Type
 
-Select which integration(s) to enable:  
-<walkthrough-select
-  id="integration-type"
-  label="Select Integration Type"
-  options="CSPM,DNSPM"
-/>
+## Integration Selection (Manual)
+
+Type **CSPM** or **DNSPM** to select the integration type:
+
+```bash
+echo "Please type CSPM or DNSPM and press Enter:"
+read INTEGRATION
+echo "You selected: $INTEGRATION"
 
 ## Enable IAM API for generating short-lived credentials & impersonating service accounts. 
 
