@@ -26,7 +26,7 @@ resource "google_project_iam_binding" "checkred_viewer" {
 resource "google_organization_iam_custom_role" "checkred_read_access_role" {
   role_id     = "CheckRedReadAccessRole"
   org_id      = "ORGANIZATION_ID"
-  title       = "checkred-service-account-read-role-test"
+  title       = "checkred-service-account-read-role"
   description = "CheckRed integration custom role for read access to organization, folders & projects"
   permissions = [
     "resourcemanager.organizations.get",
