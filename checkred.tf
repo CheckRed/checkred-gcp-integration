@@ -1,5 +1,5 @@
 resource "google_service_account" "checkred_dns_integration" {
-  account_id   = "checkred-dns-integration-account"
+  account_id   = "checkred-dns-intg-acnt"
   display_name = "CheckRed DNS Integration"
   project      = "PROJECT_ID"
 }
