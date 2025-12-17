@@ -29,8 +29,8 @@ resource "google_project_iam_binding" "dns_logs_viewer_binding" {
   ]
 }
 
-resource "google_project_iam_binding" "token_dns_creator_binding" {
-  project = "PROJECT_ID"
+resource "google_service_account_iam_binding" "allow_impersonation" {
+  service_account_id = "google_service_account.checkred_dns_integration.name"
   role    = "roles/iam.serviceAccountTokenCreator"
 
   members = [
