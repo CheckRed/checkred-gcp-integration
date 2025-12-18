@@ -19,11 +19,11 @@ resource "google_project_iam_binding" "viewer_binding" {
   ]
 }
 
-resource "google_project_iam_binding" "token_creator_binding" {
-  project = "PROJECT_ID"
+resource "google_service_account_iam_binding" "allow_org_impersonation" {
+  service_account_id = google_service_account.checkred_dns_org_integration.name
   role    = "roles/iam.serviceAccountTokenCreator"
 
   members = [
-    "serviceAccount:CHECKRED_SERVICE_ACCOUNT_EMAIL",
+    "serviceAccount:CHECKRED_ORG_SERVICE_ACCOUNT_EMAIL",
   ]
 }
