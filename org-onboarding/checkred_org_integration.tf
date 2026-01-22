@@ -34,9 +34,9 @@ resource "google_project_iam_binding" "checkred_logs_viewer" {
 }
 
 resource "google_organization_iam_custom_role" "checkred_dns_read_access_role" {
-  role_id     = "CheckRedDNSReadAccessRoleV1.0"
+  role_id     = "CheckRedDNSReadAccessRoleV3"
   org_id      = "ORGANIZATION_ID"
-  title       = "checkred-service-account-dns-read-role-v1.0"
+  title       = "checkred-service-account-dns-read-role-v3"
   description = "CheckRed DNS integration custom role for read access to organization, folders & projects"
   permissions = [
     "resourcemanager.organizations.get",
