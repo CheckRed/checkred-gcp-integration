@@ -43,7 +43,8 @@ resource "google_organization_iam_custom_role" "checkred_dns_read_access_role" {
     "resourcemanager.folders.get",
     "resourcemanager.folders.list",
     "resourcemanager.projects.get",
-    "resourcemanager.projects.list"
+    "resourcemanager.projects.list",
+    "iam.serviceAccounts.getAccessToken"
   ]
 }
 
