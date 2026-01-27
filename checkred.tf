@@ -19,6 +19,27 @@ resource "google_project_iam_binding" "dns_reader_binding" {
   ]
 }
 
+resource "google_project_iam_custom_role" "resourcemanager_reader_role" {
+  project     = "PROJECT_ID"
+  role_id     = "resourcemanagerReader"
+  title       = "Resource Manager Reader"
+  description = "Read access to folders and projects"
+  permissions = [
+    "resourcemanager.projects.get",
+
+  ]
+}
+
+# Bind the custom role to the DNS integration service account
+resource "google_project_iam_binding" "resourcemanager_reader_binding" {
+  project = "PROJECT_ID"
+  role    = google_project_iam_custom_role.resourcemanager_reader_role.name
+
+  members = [
+    "serviceAccount:${google_service_account.checkred_dns_integration.email}",
+  ]
+}
+
 resource "google_project_iam_binding" "dns_logs_viewer_binding" {
   project = "PROJECT_ID"
   role    = "roles/logging.viewer"
@@ -35,24 +56,5 @@ resource "google_project_iam_binding" "token_creator_binding" {
 
   members = [
     "serviceAccount:CHECKRED_SERVICE_ACCOUNT_EMAIL",
-  ]
-}
-resource "google_project_iam_custom_role" "resourcemanager_reader_role" {
-  project     = "PROJECT_ID"
-  role_id     = "resourcemanagerReader"
-  title       = "Resource Manager Reader"
-  description = "Read access to folders and projects"
-  permissions = [
-    "resourcemanager.projects.get"
-  ]
-}
- 
-# Bind the custom role to the DNS integration service account
-resource "google_project_iam_binding" "resourcemanager_reader_binding" {
-  project = "PROJECT_ID"
-  role    = google_project_iam_custom_role.resourcemanager_reader_role.name
- 
-  members = [
-    "serviceAccount:${google_service_account.checkred_dns_integration.email}",
   ]
 }
