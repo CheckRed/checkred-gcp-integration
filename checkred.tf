@@ -9,7 +9,7 @@ output "service_account_email" {
   value = google_service_account.checkred_integration.email
 }
 
-resource "google_project_iam_member" "viewer_binding" {
+resource "google_project_iam_binding" "viewer_binding" {
   project = "PROJECT_ID"
   role    = "roles/viewer"
 
