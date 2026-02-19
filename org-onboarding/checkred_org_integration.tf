@@ -12,7 +12,7 @@ data "google_projects" "all_projects" {
 }
 
 
-resource "google_project_iam_binding" "checkred_dns_viewer" {
+resource "google_project_iam_member" "checkred_dns_viewer" {
   count   = length(data.google_projects.all_projects.projects)
   project = data.google_projects.all_projects.projects[count.index].project_id
   role    = "roles/dns.reader"
@@ -23,7 +23,7 @@ resource "google_project_iam_binding" "checkred_dns_viewer" {
 }
 
 
-resource "google_project_iam_binding" "checkred_logs_viewer" {
+resource "google_project_iam_member" "checkred_logs_viewer" {
   count   = length(data.google_projects.all_projects.projects)
   project = data.google_projects.all_projects.projects[count.index].project_id
   role    = "roles/logging.viewer"
@@ -56,7 +56,7 @@ resource "google_organization_iam_binding" "list_projects_binding" {
   ]
 }
 
-resource "google_project_iam_binding" "token_creator_binding" {
+resource "google_project_iam_member" "token_creator_binding" {
   count   = length(data.google_projects.all_projects.projects)
   project = data.google_projects.all_projects.projects[count.index].project_id
   role    = "roles/iam.serviceAccountTokenCreator"
