@@ -14,7 +14,7 @@ resource "google_project_iam_member" "dns_reader_binding" {
   role    = "roles/dns.reader"
 
   # Reference the email of the service account from the output
-  members = [
+  member = [
     "serviceAccount:${google_service_account.checkred_dns_integration.email}",
   ]
 }
@@ -35,7 +35,7 @@ resource "google_project_iam_member" "resourcemanager_reader_binding" {
   project = "PROJECT_ID"
   role    = google_project_iam_custom_role.resourcemanager_reader_role.name
 
-  members = [
+  member = [
     "serviceAccount:${google_service_account.checkred_dns_integration.email}",
   ]
 }
@@ -45,7 +45,7 @@ resource "google_project_iam_member" "dns_logs_viewer_binding" {
   role    = "roles/logging.viewer"
 
   # Reference the email of the service account from the output
-  members = [
+  member = [
     "serviceAccount:${google_service_account.checkred_dns_integration.email}",
   ]
 }
@@ -54,7 +54,7 @@ resource "google_project_iam_member" "token_creator_binding" {
   project = "PROJECT_ID"
   role    = "roles/iam.serviceAccountTokenCreator"
 
-  members = [
+  member = [
     "serviceAccount:CHECKRED_SERVICE_ACCOUNT_EMAIL",
   ]
 }
