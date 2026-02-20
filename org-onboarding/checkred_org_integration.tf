@@ -17,9 +17,8 @@ resource "google_project_iam_member" "checkred_dns_viewer" {
   project = data.google_projects.all_projects.projects[count.index].project_id
   role    = "roles/dns.reader"
 
-  member = [
-    "serviceAccount:${google_service_account.checkred_dns_org_integration.email}",
-  ]
+  member ="serviceAccount:${google_service_account.checkred_dns_org_integration.email}"
+  
 }
 
 
@@ -28,9 +27,7 @@ resource "google_project_iam_member" "checkred_logs_viewer" {
   project = data.google_projects.all_projects.projects[count.index].project_id
   role    = "roles/logging.viewer"
 
-  member = [
-    "serviceAccount:${google_service_account.checkred_dns_org_integration.email}",
-  ]
+  member ="serviceAccount:${google_service_account.checkred_dns_org_integration.email}"
 }
 
 resource "google_organization_iam_custom_role" "checkred_dns_read_access_role" {
@@ -61,7 +58,5 @@ resource "google_project_iam_member" "token_creator_binding" {
   project = data.google_projects.all_projects.projects[count.index].project_id
   role    = "roles/iam.serviceAccountTokenCreator"
 
-  member = [
-    "serviceAccount:CHECKRED_ORG_SERVICE_ACCOUNT_EMAIL",
-  ]
+  member = "serviceAccount:CHECKRED_ORG_SERVICE_ACCOUNT_EMAIL"
 }
