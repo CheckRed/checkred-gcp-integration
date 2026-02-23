@@ -9,14 +9,12 @@ output "service_account_email" {
   value = google_service_account.checkred_dns_integration.email
 }
 
-resource "google_project_iam_binding" "dns_reader_binding" {
+resource "google_project_iam_member" "dns_reader_binding" {
   project = "PROJECT_ID"
   role    = "roles/dns.reader"
 
   # Reference the email of the service account from the output
-  members = [
-    "serviceAccount:${google_service_account.checkred_dns_integration.email}",
-  ]
+  member = "serviceAccount:${google_service_account.checkred_dns_integration.email}"
 }
 
 resource "google_project_iam_custom_role" "resourcemanager_reader_role" {
@@ -31,30 +29,24 @@ resource "google_project_iam_custom_role" "resourcemanager_reader_role" {
 }
 
 # Bind the custom role to the DNS integration service account
-resource "google_project_iam_binding" "resourcemanager_reader_binding" {
+resource "google_project_iam_member" "resourcemanager_reader_binding" {
   project = "PROJECT_ID"
   role    = google_project_iam_custom_role.resourcemanager_reader_role.name
 
-  members = [
-    "serviceAccount:${google_service_account.checkred_dns_integration.email}",
-  ]
+  member = "serviceAccount:${google_service_account.checkred_dns_integration.email}"
 }
 
-resource "google_project_iam_binding" "dns_logs_viewer_binding" {
+resource "google_project_iam_member" "dns_logs_viewer_binding" {
   project = "PROJECT_ID"
   role    = "roles/logging.viewer"
 
   # Reference the email of the service account from the output
-  members = [
-    "serviceAccount:${google_service_account.checkred_dns_integration.email}",
-  ]
+  member = "serviceAccount:${google_service_account.checkred_dns_integration.email}"
 }
 
-resource "google_project_iam_binding" "token_creator_binding" {
+resource "google_project_iam_member" "token_creator_binding" {
   project = "PROJECT_ID"
   role    = "roles/iam.serviceAccountTokenCreator"
 
-  members = [
-    "serviceAccount:CHECKRED_SERVICE_ACCOUNT_EMAIL",
-  ]
+  member = "serviceAccount:CHECKRED_SERVICE_ACCOUNT_EMAIL"
 }
