@@ -12,22 +12,25 @@ Select your GCP project to integrate with CheckRed Platform
 
 Before running the onboarding script, verify Terraform is available:
 
-terraform --version
 
+
+terraform --version
 If the command returns a version (e.g. Terraform v1.15.8), your environment is ready — proceed to "Download Terraform script". If it returns "command not found" or install instructions, Terraform is not installed. Run the commands below to install it into your home directory :
 
-**Commands**:
+Commands:
+
+
 
 TF_VERSION="1.15.8"
 mkdir -p ~/bin
-cd /tmp
 curl -fsSLO "https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip"
-unzip -o "terraform_${TF_VERSION}_linux_amd64.zip"
+unzip -o "terraform_${TF_VERSION}_linux_amd64.zip" terraform
 mv -f terraform ~/bin/
 chmod +x ~/bin/terraform
 rm -f "terraform_${TF_VERSION}_linux_amd64.zip"
 grep -qxF 'export PATH="$HOME/bin:$PATH"' ~/.bashrc || echo 'export PATH="$HOME/bin:$PATH"' >> ~/.bashrc
 export PATH="$HOME/bin:$PATH"
+hash -r
 terraform --version
 
 
