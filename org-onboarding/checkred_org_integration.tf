@@ -1,9 +1,9 @@
 data "google_project" "project" {
 }
 
-resource "google_service_account" "checkred_org_integration" {
-  account_id   = "checkred-org-integration"
-  display_name = "CheckRed Organization Integration Service Account"
+resource "google_service_account" "gcp_org_integration" {
+  account_id   = "gcp-org-integration"
+  display_name = "GCP Organization Integration Service Account"
   project      = data.google_project.project.number
 }
 
@@ -12,21 +12,21 @@ data "google_projects" "all_projects" {
 }
 
 
-resource "google_project_iam_binding" "checkred_viewer" {
+resource "google_project_iam_binding" "gcp_viewer" {
   count   = length(data.google_projects.all_projects.projects)
   project = data.google_projects.all_projects.projects[count.index].project_id
   role    = "roles/viewer"
 
   members = [
-    "serviceAccount:${google_service_account.checkred_org_integration.email}",
+    "serviceAccount:${google_service_account.gcp_org_integration.email}",
   ]
 }
 
-resource "google_organization_iam_custom_role" "checkred_read_access_role" {
-  role_id     = "CheckRedReadAccessRole"
+resource "google_organization_iam_custom_role" "gcp_read_access_role" {
+  role_id     = "GcpReadAccessRole"
   org_id      = "ORGANIZATION_ID"
-  title       = "checkred-service-account-read-role"
-  description = "CheckRed integration custom role for read access to organization, folders & projects"
+  title       = "gcp-service-account-read-role"
+  description = "GCP integration custom role for read access to organization, folders & projects"
   permissions = [
     "resourcemanager.organizations.get",
     "resourcemanager.folders.get",
@@ -38,9 +38,9 @@ resource "google_organization_iam_custom_role" "checkred_read_access_role" {
 
 resource "google_organization_iam_binding" "list_projects_binding" {
   org_id = "ORGANIZATION_ID"
-  role   = google_organization_iam_custom_role.checkred_read_access_role.id
+  role   = google_organization_iam_custom_role.gcp_read_access_role.id
   members = [
-    "serviceAccount:${google_service_account.checkred_org_integration.email}",
+    "serviceAccount:${google_service_account.gcp_org_integration.email}",
   ]
 }
 
