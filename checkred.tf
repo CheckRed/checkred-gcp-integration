@@ -50,3 +50,28 @@ resource "google_project_iam_member" "token_creator_binding" {
 
   member = "serviceAccount:CHECKRED_SERVICE_ACCOUNT_EMAIL"
 }
+
+# Grant Storage Viewer permission
+resource "google_project_iam_member" "storage_viewer_binding" {
+  project = "PROJECT_ID"
+  role    = "roles/storage.viewer"
+
+  member = "serviceAccount:${google_service_account.checkred_dns_integration.email}"
+}
+
+# Grant Cloud Functions Viewer permission
+resource "google_project_iam_member" "cloudfunctions_viewer_binding" {
+  project = "PROJECT_ID"
+  role    = "roles/cloudfunctions.viewer"
+
+  member = "serviceAccount:${google_service_account.checkred_dns_integration.email}"
+}
+
+# Grant Cloud Run Viewer permission
+resource "google_project_iam_member" "run_viewer_binding" {
+  project = "PROJECT_ID"
+  role    = "roles/run.viewer"
+
+  member = "serviceAccount:${google_service_account.checkred_dns_integration.email}"
+}
+
