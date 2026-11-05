@@ -9,14 +9,6 @@ output "service_account_email" {
   value = google_service_account.checkred_dns_integration.email
 }
 
-resource "google_project_iam_member" "dns_reader_binding" {
-  project = "PROJECT_ID"
-  role    = "roles/dns.reader"
-
-  # Reference the email of the service account from the output
-  member = "serviceAccount:${google_service_account.checkred_dns_integration.email}"
-}
-
 resource "google_project_iam_custom_role" "resourcemanager_reader_role" {
   project     = "PROJECT_ID"
   role_id     = "resourcemanagerReader"
@@ -36,12 +28,43 @@ resource "google_project_iam_member" "resourcemanager_reader_binding" {
   member = "serviceAccount:${google_service_account.checkred_dns_integration.email}"
 }
 
-resource "google_project_iam_member" "dns_logs_viewer_binding" {
-  project = "PROJECT_ID"
-  role    = "roles/logging.viewer"
+resource "google_project_iam_custom_role" "checkred_ddos_read_role" {
+  project     = "PROJECT_ID"
+  role_id     = "checkredDDoSReadRoleV1"
+  title       = "CheckRed DDoS Read Role"
+  description = "CheckRed DDoS integration custom role for read access to network, compute, logging & monitoring resources"
+  permissions = [
+    "compute.projects.get",
+    "compute.instanceGroups.get",
+    "compute.networkEndpointGroups.get",
+    "compute.regionNetworkEndpointGroups.get",
+    "resourcemanager.projects.get",
+    "compute.backendBuckets.list",
+    "compute.backendServices.list",
+    "compute.securityPolicies.list",
+    "run.domainmappings.list",
+    "run.services.list",
+    "compute.instances.list",
+    "compute.firewallPolicies.list",
+    "compute.firewalls.list",
+    "compute.forwardingRules.list",
+    "compute.addresses.list",
+    "compute.instanceGroupManagers.list",
+    "compute.instanceGroups.list",
+    "logging.logEntries.list",
+    "monitoring.timeSeries.list",
+    "compute.networkEdgeSecurityServices.list",
+    "compute.networkEndpointGroups.list",
+    "logging.privateLogEntries.list",
+    "compute.publicAdvertisedPrefixes.list",
+    "compute.targetInstances.list"
+  ]
+}
 
-  # Reference the email of the service account from the output
-  member = "serviceAccount:${google_service_account.checkred_dns_integration.email}"
+resource "google_project_iam_member" "checkred_ddos_read_binding" {
+  project = "PROJECT_ID"
+  role    = google_project_iam_custom_role.checkred_ddos_read_role.name
+  member  = "serviceAccount:${google_service_account.checkred_dns_integration.email}"
 }
 
 resource "google_project_iam_member" "token_creator_binding" {
