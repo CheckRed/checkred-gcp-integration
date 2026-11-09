@@ -1,8 +1,8 @@
 data "google_project" "project" {
 }
 
-resource "google_service_account" "dns_org_integration" {
-  account_id   = "dns-org-integration"
+resource "google_service_account" "dns_cloud_correlation_org_integration" {
+  account_id   = "dns-cloud-correlation-org-integration"
   display_name = "DNS Organization Integration Service Account"
   project      = data.google_project.project.number
 }
@@ -36,7 +36,7 @@ resource "google_project_iam_member" "storage_viewer" {
   role    = "roles/storage.viewer"
 
   members = [
-    "serviceAccount:${google_service_account.checkred_dns_org_integration.email}",
+    "serviceAccount:${google_service_account.dns_cloud_correlation_org_integration.email}",
   ]
 }
 
@@ -46,7 +46,7 @@ resource "google_project_iam_member" "cloud_functions_viewer" {
   role    = "roles/cloudfunctions.viewer"
 
   members = [
-    "serviceAccount:${google_service_account.checkred_dns_org_integration.email}",
+    "serviceAccount:${google_service_account.dns_cloud_correlation_org_integration.email}",
   ]
 }
 
@@ -56,7 +56,7 @@ resource "google_project_iam_member" "cloud_run_viewer" {
   role    = "roles/run.viewer"
 
   members = [
-    "serviceAccount:${google_service_account.checkred_dns_org_integration.email}",
+    "serviceAccount:${google_service_account.dns_cloud_correlation_org_integration.email}",
   ]
 }
 
