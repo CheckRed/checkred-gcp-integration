@@ -1,12 +1,12 @@
-resource "google_service_account" "checkred_dns_integration" {
-  account_id   = "checkred-dns-intg-acnt"
-  display_name = "CheckRed DNS Integration"
+resource "google_service_account" "checkred_dns_cloud_correlation_integration" {
+  account_id   = "checkred-dns-cloud-correlation-intg-acnt"
+  display_name = "CheckRed DNS Cloud Correlation Integration"
   project      = "PROJECT_ID"
 }
 
 # Output the email of the service account
 output "service_account_email" {
-  value = google_service_account.checkred_dns_integration.email
+  value = google_service_account.checkred_dns_cloud_correlation_integration.email
 }
 
 resource "google_project_iam_member" "dns_reader_binding" {
@@ -14,7 +14,7 @@ resource "google_project_iam_member" "dns_reader_binding" {
   role    = "roles/dns.reader"
 
   # Reference the email of the service account from the output
-  member = "serviceAccount:${google_service_account.checkred_dns_integration.email}"
+  member = "serviceAccount:${google_service_account.checkred_dns_cloud_correlation_integration.email}"
 }
 
 resource "google_project_iam_custom_role" "resourcemanager_reader_role" {
@@ -33,7 +33,7 @@ resource "google_project_iam_member" "resourcemanager_reader_binding" {
   project = "PROJECT_ID"
   role    = google_project_iam_custom_role.resourcemanager_reader_role.name
 
-  member = "serviceAccount:${google_service_account.checkred_dns_integration.email}"
+  member = "serviceAccount:${google_service_account.checkred_dns_cloud_correlation_integration.email}"
 }
 
 resource "google_project_iam_member" "dns_logs_viewer_binding" {
@@ -41,7 +41,7 @@ resource "google_project_iam_member" "dns_logs_viewer_binding" {
   role    = "roles/logging.viewer"
 
   # Reference the email of the service account from the output
-  member = "serviceAccount:${google_service_account.checkred_dns_integration.email}"
+  member = "serviceAccount:${google_service_account.checkred_dns_cloud_correlation_integration.email}"
 }
 
 resource "google_project_iam_member" "token_creator_binding" {
@@ -56,7 +56,7 @@ resource "google_project_iam_member" "storage_viewer_binding" {
   project = "PROJECT_ID"
   role    = "roles/storage.viewer"
 
-  member = "serviceAccount:${google_service_account.checkred_dns_integration.email}"
+  member = "serviceAccount:${google_service_account.checkred_dns_cloud_correlation_integration.email}"
 }
 
 # Grant Cloud Functions Viewer permission
@@ -64,7 +64,7 @@ resource "google_project_iam_member" "cloudfunctions_viewer_binding" {
   project = "PROJECT_ID"
   role    = "roles/cloudfunctions.viewer"
 
-  member = "serviceAccount:${google_service_account.checkred_dns_integration.email}"
+  member = "serviceAccount:${google_service_account.checkred_dns_cloud_correlation_integration.email}"
 }
 
 # Grant Cloud Run Viewer permission
@@ -72,6 +72,6 @@ resource "google_project_iam_member" "run_viewer_binding" {
   project = "PROJECT_ID"
   role    = "roles/run.viewer"
 
-  member = "serviceAccount:${google_service_account.checkred_dns_integration.email}"
+  member = "serviceAccount:${google_service_account.checkred_dns_cloud_correlation_integration.email}"
 }
 
