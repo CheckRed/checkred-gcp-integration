@@ -1,9 +1,9 @@
 data "google_project" "project" {
 }
 
-resource "google_service_account" "checkred_dns_org_integration" {
-  account_id   = "checkred-dns-org-integration"
-  display_name = "CheckRed DNS Organization Integration Service Account"
+resource "google_service_account" "checkred_ddos_org_integration" {
+  account_id   = "checkred-ddos-org-integration"
+  display_name = "CheckRed DDoS Organization Integration Service Account"
   project      = data.google_project.project.number
 }
 
@@ -30,7 +30,7 @@ resource "google_organization_iam_binding" "list_projects_binding" {
   org_id = "ORGANIZATION_ID"
   role   = google_organization_iam_custom_role.checkred_dns_read_access_role.id
   members = [
-    "serviceAccount:${google_service_account.checkred_dns_org_integration.email}",
+    "serviceAccount:${google_service_account.checkred_ddos_org_integration.email}",
   ]
 }
 
@@ -71,7 +71,7 @@ resource "google_organization_iam_custom_role" "checkred_ddos_read_access_role" 
 resource "google_organization_iam_member" "checkred_ddos_read_access_binding" {
   org_id = "ORGANIZATION_ID"
   role   = google_organization_iam_custom_role.checkred_ddos_read_access_role.id
-  member = "serviceAccount:${google_service_account.checkred_dns_org_integration.email}"
+  member = "serviceAccount:${google_service_account.checkred_ddos_org_integration.email}"
 }
 
 resource "google_project_iam_member" "token_creator_binding" {
