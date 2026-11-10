@@ -1,12 +1,12 @@
-resource "google_service_account" "checkred_dns_integration" {
-  account_id   = "checkred-dns-intg-acnt"
-  display_name = "CheckRed DNS Integration"
+resource "google_service_account" "checkred_ddos_integration" {
+  account_id   = "checkred-ddos-intg-acnt"
+  display_name = "CheckRed DDoS Integration"
   project      = "PROJECT_ID"
 }
 
 # Output the email of the service account
 output "service_account_email" {
-  value = google_service_account.checkred_dns_integration.email
+  value = google_service_account.checkred_ddos_integration.email
 }
 
 resource "google_project_iam_custom_role" "resourcemanager_reader_role" {
@@ -25,7 +25,7 @@ resource "google_project_iam_member" "resourcemanager_reader_binding" {
   project = "PROJECT_ID"
   role    = google_project_iam_custom_role.resourcemanager_reader_role.name
 
-  member = "serviceAccount:${google_service_account.checkred_dns_integration.email}"
+  member = "serviceAccount:${google_service_account.checkred_ddos_integration.email}"
 }
 
 resource "google_project_iam_custom_role" "checkred_ddos_read_role" {
@@ -64,7 +64,7 @@ resource "google_project_iam_custom_role" "checkred_ddos_read_role" {
 resource "google_project_iam_member" "checkred_ddos_read_binding" {
   project = "PROJECT_ID"
   role    = google_project_iam_custom_role.checkred_ddos_read_role.name
-  member  = "serviceAccount:${google_service_account.checkred_dns_integration.email}"
+  member  = "serviceAccount:${google_service_account.checkred_ddos_integration.email}"
 }
 
 resource "google_project_iam_member" "token_creator_binding" {
