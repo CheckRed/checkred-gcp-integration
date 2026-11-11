@@ -2,7 +2,7 @@ data "google_project" "project" {
 }
 
 resource "google_service_account" "dns_cloud_correlation_org_integration" {
-  account_id   = "dns-cloud-correlation-org-integration"
+  account_id   = "dns-cc-org-integration"
   display_name = "DNS Organization Integration Service Account"
   project      = data.google_project.project.number
 }
@@ -17,7 +17,7 @@ resource "google_project_iam_member" "dns_viewer" {
   project = data.google_projects.all_projects.projects[count.index].project_id
   role    = "roles/dns.reader"
 
-  member ="serviceAccount:${google_service_account.dns_org_integration.email}"
+  member ="serviceAccount:${google_service_account.dns_cloud_correlation_org_integration.email}"
 
 }
 
@@ -27,7 +27,7 @@ resource "google_project_iam_member" "logs_viewer" {
   project = data.google_projects.all_projects.projects[count.index].project_id
   role    = "roles/logging.viewer"
 
-  member ="serviceAccount:${google_service_account.dns_org_integration.email}"
+  member ="serviceAccount:${google_service_account.dns_cloud_correlation_org_integration.email}"
 }
 
 resource "google_project_iam_member" "storage_viewer" {
@@ -35,9 +35,7 @@ resource "google_project_iam_member" "storage_viewer" {
   project = data.google_projects.all_projects.projects[count.index].project_id
   role    = "roles/storage.viewer"
 
-  members = [
-    "serviceAccount:${google_service_account.dns_cloud_correlation_org_integration.email}",
-  ]
+  member = "serviceAccount:${google_service_account.dns_cloud_correlation_org_integration.email}"
 }
 
 resource "google_project_iam_member" "cloud_functions_viewer" {
@@ -45,9 +43,7 @@ resource "google_project_iam_member" "cloud_functions_viewer" {
   project = data.google_projects.all_projects.projects[count.index].project_id
   role    = "roles/cloudfunctions.viewer"
 
-  members = [
-    "serviceAccount:${google_service_account.dns_cloud_correlation_org_integration.email}",
-  ]
+  member = "serviceAccount:${google_service_account.dns_cloud_correlation_org_integration.email}"
 }
 
 resource "google_project_iam_member" "cloud_run_viewer" {
@@ -55,15 +51,13 @@ resource "google_project_iam_member" "cloud_run_viewer" {
   project = data.google_projects.all_projects.projects[count.index].project_id
   role    = "roles/run.viewer"
 
-  members = [
-    "serviceAccount:${google_service_account.dns_cloud_correlation_org_integration.email}",
-  ]
+  member = "serviceAccount:${google_service_account.dns_cloud_correlation_org_integration.email}"
 }
 
-resource "google_organization_iam_custom_role" "dns_read_access_role" {
-  role_id     = "DNSReadAccessRoleV3"
+resource "google_organization_iam_custom_role" "dns_cloud_correlation_read_access_role" {
+  role_id     = "DNSCloudCorrelationReadAccessRoleV3"
   org_id      = "ORGANIZATION_ID"
-  title       = "service-account-dns-read-role-v3"
+  title       = "dns-cloud-correlation-service-account-read-role-v3"
   description = "DNS integration custom role for read access to organization, folders & projects"
   permissions = [
     "resourcemanager.organizations.get",
@@ -77,9 +71,9 @@ resource "google_organization_iam_custom_role" "dns_read_access_role" {
 
 resource "google_organization_iam_binding" "list_projects_binding" {
   org_id = "ORGANIZATION_ID"
-  role   = google_organization_iam_custom_role.dns_read_access_role.id
+  role   = google_organization_iam_custom_role.dns_cloud_correlation_read_access_role.id
   members = [
-    "serviceAccount:${google_service_account.dns_org_integration.email}",
+    "serviceAccount:${google_service_account.dns_cloud_correlation_org_integration.email}",
   ]
 }
 
