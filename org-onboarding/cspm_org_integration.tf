@@ -1,8 +1,8 @@
 data "google_project" "project" {
 }
 
-resource "google_service_account" "gcp_org_integration" {
-  account_id   = "gcp-org-integration"
+resource "google_service_account" "cspm_org_integration" {
+  account_id   = "cspm-org-integration"
   display_name = "GCP Organization Integration Service Account"
   project      = data.google_project.project.number
 }
@@ -18,14 +18,14 @@ resource "google_project_iam_binding" "gcp_viewer" {
   role    = "roles/viewer"
 
   members = [
-    "serviceAccount:${google_service_account.gcp_org_integration.email}",
+    "serviceAccount:${google_service_account.cspm_org_integration.email}",
   ]
 }
 
-resource "google_organization_iam_custom_role" "gcp_read_access_role" {
-  role_id     = "GcpReadAccessRole"
+resource "google_organization_iam_custom_role" "cspm_read_access_role" {
+  role_id     = "ReadAccessRoleCspm"
   org_id      = "ORGANIZATION_ID"
-  title       = "gcp-service-account-read-role"
+  title       = "cspm-service-account-read-role"
   description = "GCP integration custom role for read access to organization, folders & projects"
   permissions = [
     "resourcemanager.organizations.get",
@@ -38,9 +38,9 @@ resource "google_organization_iam_custom_role" "gcp_read_access_role" {
 
 resource "google_organization_iam_binding" "list_projects_binding" {
   org_id = "ORGANIZATION_ID"
-  role   = google_organization_iam_custom_role.gcp_read_access_role.id
+  role   = google_organization_iam_custom_role.cspm_read_access_role.id
   members = [
-    "serviceAccount:${google_service_account.gcp_org_integration.email}",
+    "serviceAccount:${google_service_account.cspm_org_integration.email}",
   ]
 }
 
@@ -50,6 +50,6 @@ resource "google_project_iam_binding" "token_creator_binding" {
   role    = "roles/iam.serviceAccountTokenCreator"
 
   members = [
-    "serviceAccount:CHECKRED_ORG_SERVICE_ACCOUNT_EMAIL",
+    "serviceAccount:ORG_SERVICE_ACCOUNT_EMAIL",
   ]
 }

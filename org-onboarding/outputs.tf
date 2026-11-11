@@ -1,3 +1,3 @@
 output "service_account_email" {
-  value = google_service_account.gcp_org_integration.email
+  value = google_service_account.cspm_org_integration.email
 }
