@@ -1,12 +1,12 @@
-resource "google_service_account" "checkred_ddos_integration" {
-  account_id   = "checkred-ddos-intg-acnt"
-  display_name = "CheckRed DDoS Integration"
+resource "google_service_account" "ddos_integration" {
+  account_id   = "ddos-intg-acnt"
+  display_name = "DDoS Integration"
   project      = "PROJECT_ID"
 }
 
 # Output the email of the service account
 output "service_account_email" {
-  value = google_service_account.checkred_ddos_integration.email
+  value = google_service_account.ddos_integration.email
 }
 
 resource "google_project_iam_custom_role" "resourcemanager_reader_role" {
@@ -25,14 +25,14 @@ resource "google_project_iam_member" "resourcemanager_reader_binding" {
   project = "PROJECT_ID"
   role    = google_project_iam_custom_role.resourcemanager_reader_role.name
 
-  member = "serviceAccount:${google_service_account.checkred_ddos_integration.email}"
+  member = "serviceAccount:${google_service_account.ddos_integration.email}"
 }
 
-resource "google_project_iam_custom_role" "checkred_ddos_read_role" {
+resource "google_project_iam_custom_role" "ddos_read_role" {
   project     = "PROJECT_ID"
-  role_id     = "checkredDDoSReadRoleV1"
-  title       = "CheckRed DDoS Read Role"
-  description = "CheckRed DDoS integration custom role for read access to network, compute, logging & monitoring resources"
+  role_id     = "DDoSReadRoleV1"
+  title       = "DDoS Read Role"
+  description = "DDoS integration custom role for read access to network, compute, logging & monitoring resources"
   permissions = [
     "compute.projects.get",
     "compute.instanceGroups.get",
@@ -61,15 +61,15 @@ resource "google_project_iam_custom_role" "checkred_ddos_read_role" {
   ]
 }
 
-resource "google_project_iam_member" "checkred_ddos_read_binding" {
+resource "google_project_iam_member" "ddos_read_binding" {
   project = "PROJECT_ID"
-  role    = google_project_iam_custom_role.checkred_ddos_read_role.name
-  member  = "serviceAccount:${google_service_account.checkred_ddos_integration.email}"
+  role    = google_project_iam_custom_role.ddos_read_role.name
+  member  = "serviceAccount:${google_service_account.ddos_integration.email}"
 }
 
 resource "google_project_iam_member" "token_creator_binding" {
   project = "PROJECT_ID"
   role    = "roles/iam.serviceAccountTokenCreator"
 
-  member = "serviceAccount:CHECKRED_SERVICE_ACCOUNT_EMAIL"
+  member = "serviceAccount:SERVICE_ACCOUNT_EMAIL"
 }
