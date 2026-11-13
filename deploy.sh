@@ -1,13 +1,13 @@
 set -e
 
-TERRAFORM_VERSION="1.9.8"
+TERRAFORM_VERSION="1.17.1"
 export PATH="$HOME/.local/bin:$PATH"
 
 ensure_terraform() {
-  if terraform version 2>/dev/null | grep -q '^Terraform v'; then
+  if terraform version 2>/dev/null | grep -qx "Terraform v${TERRAFORM_VERSION}"; then
     return
   fi
-  echo "Terraform not found, installing v${TERRAFORM_VERSION} to $HOME/.local/bin"
+  echo "Terraform v${TERRAFORM_VERSION} not found, installing it to $HOME/.local/bin"
   case "$(uname -m)" in
     x86_64) tf_arch="amd64" ;;
     aarch64|arm64) tf_arch="arm64" ;;
