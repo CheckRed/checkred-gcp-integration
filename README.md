@@ -10,11 +10,11 @@ If you don't have project ready, [Create a new project](https://developers.googl
 ## Prerequisite: Check Terraform is installed
 Before running the onboarding script, verify Terraform is available:
 
-terraform --version If the command returns a version (e.g. Terraform v1.15.8), your environment is ready — proceed to "Download Terraform script". If it returns "command not found" or install instructions, Terraform is not installed. Run the commands below to install it into your home directory:
+terraform --version If the command returns Terraform v1.17.1, your environment is ready — proceed to "Download Terraform script". If it returns an older version, "command not found" or install instructions, Terraform needs to be installed or upgraded. Run the commands below to install it into your home directory:
 
 Commands:
 
-TF_VERSION="1.15.8" mkdir -p ~/bin curl -fsSLO "https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip" unzip -o 
+TF_VERSION="1.17.1" mkdir -p ~/bin curl -fsSLO "https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip" unzip -o 
 "terraform_${TF_VERSION}linux_amd64.zip" terraform mv -f terraform ~/bin/ chmod +x ~/bin/terraform rm -f 
 "terraform${TF_VERSION}_linux_amd64.zip" grep -qxF 'export PATH="$HOME/bin:$PATH"' ~/.bashrc || echo 'export PATH="$HOME/bin:$PATH"' >> ~/.bashrc export PATH="$HOME/bin:$PATH" hash -r terraform --version
 
