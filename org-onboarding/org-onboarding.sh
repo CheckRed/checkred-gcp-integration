@@ -33,8 +33,8 @@ gcloud services enable iamcredentials.googleapis.com --project $1
 gcloud services enable cloudresourcemanager.googleapis.com --project $1
 export ORG_ID=`gcloud projects get-ancestors $PROJECT_ID --format=json | jq -r '.[] | select(.type == "organization") | .id'`
 sed -i "s/PROJECT_ID/$PROJECT_ID/g" versions.tf
-sed -i "s/ORGANIZATION_ID/$ORG_ID/g" dns_cloud_correlation_org_integration.tf
-sed -i "s/ORG_SERVICE_ACCOUNT_EMAIL/$2/g" dns_cloud_correlation_org_integration.tf
+sed -i "s/ORGANIZATION_ID/$ORG_ID/g" dns_ddos_cloud_correlation_org_integration.tf
+sed -i "s/ORG_SERVICE_ACCOUNT_EMAIL/$2/g" dns_ddos_cloud_correlation_org_integration.tf
 ensure_terraform
 terraform init
 terraform plan
