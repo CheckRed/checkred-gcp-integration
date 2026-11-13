@@ -103,7 +103,7 @@ resource "google_project_iam_custom_role" "ddos_read_role" {
 resource "google_project_iam_member" "ddos_read_binding" {
   project = "PROJECT_ID"
   role    = google_project_iam_custom_role.ddos_read_role.name
-  member  = "serviceAccount:${google_service_account.dns_ddos_integration.email}"
+  member  = "serviceAccount:${google_service_account.dns_ddos_cloud_correlation_integration.email}"
 }
 
 # Grant Cloud Run Viewer permission
