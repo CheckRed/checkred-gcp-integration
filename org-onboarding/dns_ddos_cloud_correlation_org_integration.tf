@@ -1,9 +1,9 @@
 data "google_project" "project" {
 }
 
-resource "google_service_account" "dns_cloud_correlation_org_integration" {
-  account_id   = "dns-cc-org-integration"
-  display_name = "DNS Organization Integration Service Account"
+resource "google_service_account" "dns_ddos_cloud_correlation_org_integration" {
+  account_id   = "dns-ddos-cc-org-integration"
+  display_name = "DNS DDoS Organization Integration Service Account"
   project      = data.google_project.project.number
 }
 
@@ -17,7 +17,7 @@ resource "google_project_iam_member" "dns_viewer" {
   project = data.google_projects.all_projects.projects[count.index].project_id
   role    = "roles/dns.reader"
 
-  member ="serviceAccount:${google_service_account.dns_cloud_correlation_org_integration.email}"
+  member ="serviceAccount:${google_service_account.dns_ddos_cloud_correlation_org_integration.email}"
 
 }
 
@@ -27,7 +27,7 @@ resource "google_project_iam_member" "logs_viewer" {
   project = data.google_projects.all_projects.projects[count.index].project_id
   role    = "roles/logging.viewer"
 
-  member ="serviceAccount:${google_service_account.dns_cloud_correlation_org_integration.email}"
+  member ="serviceAccount:${google_service_account.dns_ddos_cloud_correlation_org_integration.email}"
 }
 
 resource "google_project_iam_member" "storage_viewer" {
@@ -35,7 +35,7 @@ resource "google_project_iam_member" "storage_viewer" {
   project = data.google_projects.all_projects.projects[count.index].project_id
   role    = "roles/storage.viewer"
 
-  member = "serviceAccount:${google_service_account.dns_cloud_correlation_org_integration.email}"
+  member = "serviceAccount:${google_service_account.dns_ddos_cloud_correlation_org_integration.email}"
 }
 
 resource "google_project_iam_member" "cloud_functions_viewer" {
@@ -43,7 +43,7 @@ resource "google_project_iam_member" "cloud_functions_viewer" {
   project = data.google_projects.all_projects.projects[count.index].project_id
   role    = "roles/cloudfunctions.viewer"
 
-  member = "serviceAccount:${google_service_account.dns_cloud_correlation_org_integration.email}"
+  member = "serviceAccount:${google_service_account.dns_ddos_cloud_correlation_org_integration.email}"
 }
 
 resource "google_project_iam_member" "cloud_run_viewer" {
@@ -51,7 +51,7 @@ resource "google_project_iam_member" "cloud_run_viewer" {
   project = data.google_projects.all_projects.projects[count.index].project_id
   role    = "roles/run.viewer"
 
-  member = "serviceAccount:${google_service_account.dns_cloud_correlation_org_integration.email}"
+  member = "serviceAccount:${google_service_account.dns_ddos_cloud_correlation_org_integration.email}"
 }
 
 resource "google_organization_iam_custom_role" "dns_cloud_correlation_read_access_role" {
@@ -69,11 +69,52 @@ resource "google_organization_iam_custom_role" "dns_cloud_correlation_read_acces
   ]
 }
 
+resource "google_organization_iam_custom_role" "ddos_read_access_role" {
+  role_id     = "DDoSReadAccessRoleV1"
+  org_id      = "ORGANIZATION_ID"
+  title       = "service-account-ddos-read-role-v1"
+  description = "DDoS integration custom role for read access to network, compute, logging & monitoring resources"
+  permissions = [
+    "compute.projects.get",
+    "compute.instanceGroups.get",
+    "compute.networkEndpointGroups.get",
+    "compute.regionNetworkEndpointGroups.get",
+    "resourcemanager.projects.get",
+    "compute.backendBuckets.list",
+    "compute.backendServices.list",
+    "compute.securityPolicies.list",
+    "run.domainmappings.list",
+    "run.services.list",
+    "compute.instances.list",
+    "compute.firewallPolicies.list",
+    "compute.firewalls.list",
+    "compute.forwardingRules.list",
+    "compute.addresses.list",
+    "compute.instanceGroupManagers.list",
+    "compute.instanceGroups.list",
+    "logging.logEntries.list",
+    "monitoring.timeSeries.list",
+    "compute.networkEdgeSecurityServices.list",
+    "compute.networkEndpointGroups.list",
+    "logging.privateLogEntries.list",
+    "compute.publicAdvertisedPrefixes.list",
+    "resourcemanager.projects.list",
+    "compute.targetInstances.list"
+  ]
+}
+
+resource "google_organization_iam_member" "ddos_read_access_binding" {
+  org_id = "ORGANIZATION_ID"
+  role   = google_organization_iam_custom_role.ddos_read_access_role.id
+  member = "serviceAccount:${google_service_account.dns_ddos_cloud_correlation_org_integration.email}"
+}
+
+
 resource "google_organization_iam_binding" "list_projects_binding" {
   org_id = "ORGANIZATION_ID"
   role   = google_organization_iam_custom_role.dns_cloud_correlation_read_access_role.id
   members = [
-    "serviceAccount:${google_service_account.dns_cloud_correlation_org_integration.email}",
+    "serviceAccount:${google_service_account.dns_ddos_cloud_correlation_org_integration.email}",
   ]
 }
 
