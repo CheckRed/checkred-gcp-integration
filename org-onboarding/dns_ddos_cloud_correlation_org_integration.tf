@@ -55,10 +55,10 @@ resource "google_project_iam_member" "cloud_run_viewer" {
 }
 
 resource "google_organization_iam_custom_role" "dns_cloud_correlation_read_access_role" {
-  role_id     = "DNSCloudCorrelationReadAccessRoleV3"
+  role_id     = "DNSDDoSCloudCorrelationReadAccessRoleV3"
   org_id      = "ORGANIZATION_ID"
-  title       = "dns-cloud-correlation-service-account-read-role-v3"
-  description = "DNS integration custom role for read access to organization, folders & projects"
+  title       = "dns-ddos-cloud-correlation-service-account-read-role-v3"
+  description = "DNS DDoS Cloud Correlation integration custom role for read access to organization, folders & projects"
   permissions = [
     "resourcemanager.organizations.get",
     "resourcemanager.folders.get",
@@ -70,10 +70,10 @@ resource "google_organization_iam_custom_role" "dns_cloud_correlation_read_acces
 }
 
 resource "google_organization_iam_custom_role" "ddos_read_access_role" {
-  role_id     = "DDoSReadAccessRoleV1"
+  role_id     = "DNSDDoSCloudCorrelationReadAccessRoleV1"
   org_id      = "ORGANIZATION_ID"
-  title       = "service-account-ddos-read-role-v1"
-  description = "DDoS integration custom role for read access to network, compute, logging & monitoring resources"
+  title       = "dns-ddos-cloud-correlation-service-account-read-role-v1"
+  description = "DNS DDoS Cloud Correlation integration custom role for read access to network, compute, logging & monitoring resources"
   permissions = [
     "compute.projects.get",
     "compute.instanceGroups.get",
