@@ -11,16 +11,16 @@ output "service_account_email" {
 
 resource "google_project_iam_custom_role" "resourcemanager_reader_role" {
   project     = "PROJECT_ID"
-  role_id     = "resourcemanagerReader"
-  title       = "Resource Manager Reader"
-  description = "Read access to folders and projects"
+  role_id     = "resourcemanagerReaderDDoS"
+  title       = "Resource Manager Reader DDoS"
+  description = "DDoS integration custom role for read access to the project"
   permissions = [
     "resourcemanager.projects.get",
 
   ]
 }
 
-# Bind the custom role to the DNS integration service account
+# Bind the custom role to the DDoS integration service account
 resource "google_project_iam_member" "resourcemanager_reader_binding" {
   project = "PROJECT_ID"
   role    = google_project_iam_custom_role.resourcemanager_reader_role.name
