@@ -46,9 +46,9 @@ resource "google_project_iam_member" "dns_logs_viewer_binding" {
 
 resource "google_project_iam_custom_role" "ddos_read_role" {
   project     = "PROJECT_ID"
-  role_id     = "DDoSReadRoleV1"
-  title       = "DDoS Read Role"
-  description = "DDoS integration custom role for read access to network, compute, logging & monitoring resources"
+  role_id     = "DNSDDoSReadRoleV1"
+  title       = "DNS DDoS Read Role"
+  description = "DNS DDoS integration custom role for read access to network, compute, logging & monitoring resources"
   permissions = [
     "compute.projects.get",
     "compute.instanceGroups.get",
