@@ -18,9 +18,9 @@ resource "google_project_iam_member" "dns_reader_binding" {
 
 resource "google_project_iam_custom_role" "resourcemanager_reader_role_dns" {
   project     = "PROJECT_ID"
-  role_id     = "resourcemanagerReaderdns"
+  role_id     = "resourcemanagerReaderDNS"
   title       = "Resource Manager Reader DNS"
-  description = "Read access to folders and projects"
+  description = "DNS integration custom role for read access to the project"
 
   permissions = [
     "resourcemanager.projects.get",
