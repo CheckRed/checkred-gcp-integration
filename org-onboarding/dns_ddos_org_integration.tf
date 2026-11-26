@@ -54,10 +54,10 @@ resource "google_organization_iam_binding" "list_projects_binding" {
 }
 
 resource "google_organization_iam_custom_role" "ddos_read_access_role" {
-  role_id     = "DDoSReadAccessRoleV1"
+  role_id     = "DNSDDoSReadAccessRoleV1"
   org_id      = "ORGANIZATION_ID"
-  title       = "service-account-ddos-read-role-v1"
-  description = "DDoS integration custom role for read access to network, compute, logging & monitoring resources"
+  title       = "service-account-dns-ddos-read-role-v1"
+  description = "DNS DDoS integration custom role for read access to network, compute, logging & monitoring resources"
   permissions = [
     "compute.projects.get",
     "compute.instanceGroups.get",
